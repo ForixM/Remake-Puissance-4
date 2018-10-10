@@ -109,7 +109,8 @@ public class Container extends JPanel {
             nbrPlayer = 1;
         else if (player.equals("Player 2"))
             nbrPlayer = 2;
-        while(loop < 1000){
+
+        while(loop < 2000){
             if (y < 5){
                 if(coords[y+1][x] == nbrPlayer) {
                     serie++;
