@@ -5,11 +5,6 @@ import java.awt.*;
 
 public class Container extends JPanel {
 
-
-    public Container(){
-
-    }
-
      static String player = "Player 1";
 
     static int[][] coords = {
@@ -59,6 +54,10 @@ public class Container extends JPanel {
             }
         }
 
+        if (player.equals("Player 1"))
+            g.setColor(Color.RED);
+        else if (player.equals("Player 2"))
+            g.setColor(Color.BLUE);
         g.drawString("Tour: "+player, this.getWidth()/2-50, 10);
     }
 
@@ -100,9 +99,12 @@ public class Container extends JPanel {
         }
     }
 
+    boolean win = false;
+
+
+
     public void verifWin(int posX, int posY){
-        int loop = 0;
-        int serie = 1;
+        int serie = 0;
         int x = posX, y = posY;
         int nbrPlayer = 1;
         if (player.equals("Player 1"))
@@ -110,114 +112,288 @@ public class Container extends JPanel {
         else if (player.equals("Player 2"))
             nbrPlayer = 2;
 
-        while(loop < 2000){
-            if (y < 5){
-                if(coords[y+1][x] == nbrPlayer) {
-                    serie++;
-                    y++;
-                    if (serie == 4) {
-                        clear();
-                        System.out.println(player + " GAGNE !");
-                        return;
+        disp();
+
+        System.out.println();
+        System.out.println("X = "+x+" Y = "+y);
+
+        if (y > 0){
+            y--;
+            if(coords[y][x] == nbrPlayer) {
+                y++;
+                System.out.println("Case trouvé en haut");
+                y--;
+                serie++;
+                for (int i = 0; i < 2; i++){
+                    if (y > 0) {
+                        if (coords[y--][x] == nbrPlayer) {
+                            y++;
+                            System.out.println("HAUT");
+                            serie++;
+                            y--;
+                        }
                     }
                 }
-            } else if (y < 5 && x < 6){
-                if (coords[y+1][x+1] == nbrPlayer) {
-                    serie++;
-                    y++;
-                    x++;
-                    if (serie == 4) {
-                        clear();
-                        System.out.println(player + " GAGNE !");
-                        return;
-                    }
-                }
-            } else if (x < 6){
-                if (coords[y][x+1] == nbrPlayer) {
-                    serie++;
-                    x++;
-                    if (serie == 4) {
-                        clear();
-                        System.out.println(player + " GAGNE !");
-                        return;
-                    }
-                }
-            } else if (y > 0 && x < 6){
-                if (coords[y-1][x+1] == nbrPlayer) {
-                    serie++;
-                    y--;
-                    x++;
-                    if (serie == 4) {
-                        clear();
-                        System.out.println(player + " GAGNE !");
-                        return;
-                    }
-                }
-            } else if (y > 0){
-                if (coords[y-1][x] == nbrPlayer) {
-                    serie++;
-                    y--;
-                    if (serie == 4) {
-                        clear();
-                        System.out.println(player + " GAGNE !");
-                        return;
-                    }
-                }
-            } else if (y > 0 && x > 0){
-                if (coords[y-1][x-1] == nbrPlayer) {
-                    serie++;
-                    y--;
-                    x--;
-                    if (serie == 4) {
-                        clear();
-                        System.out.println(player + " GAGNE !");
-                        return;
-                    }
-                }
-            } else if (x > 0){
-                if (coords[y][x-1] == nbrPlayer) {
-                    serie++;
-                    x--;
-                    if (serie == 4) {
-                        clear();
-                        System.out.println(player + " GAGNE !");
-                        return;
-                    }
-                }
-            } else if (y < 5 && x > 0){
-                if (coords[y+1][x-1] == nbrPlayer) {
-                    serie++;
-                    y++;
-                    x--;
-                    if (serie == 4) {
-                        clear();
-                        System.out.println(player + " GAGNE !");
-                        return;
-                    }
-                }
+                if (serie == 3){
+                    win = true;
+                    System.out.println(player+" A GAGNE !!!");
+                    clear();
+                } else
+                    serie = 0;
+                x = posX;
+                y = posY;
             } else {
-                System.out.println("Série: "+serie);
-                return;
+                y++;
             }
-            loop++;
         }
-            /*
-            D'abord vérifier 0 0 2 1
-                             0 0 1 2
-                             0 1 2 1
-                             1 2 2 2
-            [+1][0]
-            [+1][+1]
-            [0][+1]
-            [-1][+1]
-            [-1][0]
-            [-1][-1]
-            [0][-1]
-            [+1][-1]
+        System.out.println();
+        System.out.println("X = "+x+" Y = "+y);
 
+        if (y > 0 && x < 6){
+            y--;
+            x++;
+            if (coords[y][x] == nbrPlayer) {
+                y++;
+                x--;
+                System.out.println("Case trouvé en haut à droite");
+                y--;
+                x++;
+                serie++;
+                for (int i = 0; i < 2; i++){
+                    if (y > 0 && x < 6) {
+                        if (coords[y--][x++] == nbrPlayer) {
+                            y++;
+                            x--;
+                            System.out.println("HAUT DROITE");
+                            serie++;
+                            y--;
+                            x++;
+                        }
+                    }
+                }
+                if (serie == 3){
+                    win = true;
+                    System.out.println(player+" A GAGNE !!!");
+                    clear();
+                } else
+                    serie = 0;
+                x = posX;
+                y = posY;
+            } else {
+                y++;
+                x--;
+            }
+        }
+        System.out.println();
+        System.out.println("X = "+x+" Y = "+y);
 
-             */
+        if (x < 6){
+            x++;
+            if (coords[y][x] == nbrPlayer) {
+                x--;
+                System.out.println("Case trouvé à droite");
+                x++;
+                serie++;
+                for (int i = 0; i < 2; i++){
+                    if (x < 6) {
+                        if (coords[y][x++] == nbrPlayer) {
+                            x--;
+                            System.out.println("DROITE");
+                            serie++;
+                            x++;
+                        }
+                    }
+                }
+                if (serie == 3){
+                    win = true;
+                    System.out.println(player+" A GAGNE !!!");
+                    clear();
+                } else
+                    serie = 0;
+                x = posX;
+                y = posY;
+            } else
+                x--;
+        }
 
+        if (y < 5 && x < 6){
+            y++;
+            x++;
+            if (coords[y][x] == nbrPlayer) {
+                y--;
+                x--;
+                System.out.println("Case trouvé en bas à droite");
+                y++;
+                x++;
+                serie++;
+                for (int i = 0; i < 2; i++){
+                    if (y < 5 && x < 6) {
+                        if (coords[y++][x++] == nbrPlayer) {
+                            y--;
+                            x--;
+                            System.out.println("BAS DROITE");
+                            serie++;
+                            y++;
+                            x++;
+                        }
+                    }
+                }
+                if (serie == 3){
+                    win = true;
+                    System.out.println(player+" A GAGNE !!!");
+                    clear();
+                } else
+                    serie = 0;
+                x = posX;
+                y = posY;
+            } else {
+                y--;
+                x--;
+            }
+        }
+
+        if (y < 5){
+            y++;
+            if (coords[y][x] == nbrPlayer) {
+                y--;
+                System.out.println("Case trouvé en bas");
+                y++;
+                serie++;
+                for (int i = 0; i < 2; i++){
+                    if (y < 5) {
+                        if (coords[y++][x] == nbrPlayer) {
+                            y--;
+                            System.out.println("BAS");
+                            serie++;
+                            y++;
+                        }
+                    }
+                }
+                if (serie == 3){
+                    win = true;
+                    System.out.println(player+" A GAGNE !!!");
+                    clear();
+                } else
+                    serie = 0;
+                x = posX;
+                y = posY;
+            } else
+                y--;
+        }
+
+        if (y < 5 && x > 0){
+            y++;
+            x--;
+            if (coords[y][x] == nbrPlayer) {
+                y--;
+                x++;
+                System.out.println("Case trouvé en bas à gauche");
+                y++;
+                x--;
+                serie++;
+                for (int i = 0; i < 2; i++){
+                    if (y < 5 && x > 0) {
+                        if (coords[y++][x--] == nbrPlayer) {
+                            y--;
+                            x++;
+                            System.out.println("BAS GAUCHE");
+                            serie++;
+                            y++;
+                            x--;
+                        }
+                    }
+                }
+                if (serie == 3){
+                    win = true;
+                    System.out.println(player+" A GAGNE !!!");
+                    clear();
+                } else
+                    serie = 0;
+                x = posX;
+                y = posY;
+            } else {
+                y--;
+                x++;
+            }
+        }
+
+        if (x > 0){
+            x--;
+            if (coords[y][x] == nbrPlayer) {
+                x++;
+                System.out.println("Case trouvé à gauche");
+                x--;
+                serie++;
+                for (int i = 0; i < 2; i++){
+                    if (x > 0) {
+                        if (coords[y][x--] == nbrPlayer) {
+                            x++;
+                            System.out.println("GAUCHE");
+                            serie++;
+                            x--;
+                        }
+                    }
+                }
+                if (serie == 3){
+                    win = true;
+                    System.out.println(player+" A GAGNE !!!");
+                    clear();
+                } else
+                    serie = 0;
+                x = posX;
+                y = posY;
+            } else
+                x++;
+        }
+
+        if (y > 0 && x > 0){
+            y--;
+            x--;
+            if (coords[y][x] == nbrPlayer) {
+                y++;
+                x++;
+                System.out.println("Case trouvé en haut à gauche");
+                y--;
+                x--;
+                serie++;
+                for (int i = 0; i < 2; i++){
+                    if (y > 0 && x > 0) {
+                        if (coords[y--][x--] == nbrPlayer) {
+                            y++;
+                            x++;
+                            System.out.println("BAS GAUCHE");
+                            serie++;
+                            y--;
+                            x--;
+                        }
+                    }
+                }
+                if (serie == 3){
+                    win = true;
+                    System.out.println(player+" A GAGNE !!!");
+                    clear();
+                } else
+                    serie = 0;
+                x = posX;
+                y = posY;
+            } else {
+                y++;
+                x++;
+            }
+        }
+        System.out.println();
+        System.out.println("-----------------------------");
+        System.out.println();
+    }
+
+    public void disp(){
+        int x, y;
+        for(y = 0; y < 6; y++){
+            for (x = 0; x < 7; x++){
+                System.out.print(coords[y][x]+" ");
+            }
+            System.out.println();
+        }
     }
 
     public void clear(){
@@ -225,7 +401,6 @@ public class Container extends JPanel {
         for(y = 0; y < 6; y++){
             for (x = 0; x < 7; x++){
                 coords[y][x] = 0;
-
             }
         }
         repaint();
