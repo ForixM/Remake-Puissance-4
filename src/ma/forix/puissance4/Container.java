@@ -99,10 +99,6 @@ public class Container extends JPanel {
         }
     }
 
-    boolean win = false;
-
-
-
     public void verifWin(int posX, int posY){
         int serie = 0;
         int x = posX, y = posY;
@@ -135,7 +131,6 @@ public class Container extends JPanel {
                     }
                 }
                 if (serie == 3){
-                    win = true;
                     System.out.println(player+" A GAGNE !!!");
                     clear();
                 } else
@@ -172,7 +167,6 @@ public class Container extends JPanel {
                     }
                 }
                 if (serie == 3){
-                    win = true;
                     System.out.println(player+" A GAGNE !!!");
                     clear();
                 } else
@@ -205,7 +199,6 @@ public class Container extends JPanel {
                     }
                 }
                 if (serie == 3){
-                    win = true;
                     System.out.println(player+" A GAGNE !!!");
                     clear();
                 } else
@@ -239,7 +232,6 @@ public class Container extends JPanel {
                     }
                 }
                 if (serie == 3){
-                    win = true;
                     System.out.println(player+" A GAGNE !!!");
                     clear();
                 } else
@@ -270,7 +262,6 @@ public class Container extends JPanel {
                     }
                 }
                 if (serie == 3){
-                    win = true;
                     System.out.println(player+" A GAGNE !!!");
                     clear();
                 } else
@@ -304,7 +295,6 @@ public class Container extends JPanel {
                     }
                 }
                 if (serie == 3){
-                    win = true;
                     System.out.println(player+" A GAGNE !!!");
                     clear();
                 } else
@@ -335,7 +325,6 @@ public class Container extends JPanel {
                     }
                 }
                 if (serie == 3){
-                    win = true;
                     System.out.println(player+" A GAGNE !!!");
                     clear();
                 } else
@@ -369,7 +358,6 @@ public class Container extends JPanel {
                     }
                 }
                 if (serie == 3){
-                    win = true;
                     System.out.println(player+" A GAGNE !!!");
                     clear();
                 } else
